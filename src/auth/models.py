@@ -8,8 +8,8 @@ class User(SQLModel, table=True) :
     uid : uuid.UUID = Field(sa_column=Column(pg.UUID,nullable=False,primary_key=True,default=uuid.uuid4))
     username: str
     email: str = Field(nullable=False)
-    first_name: str
-    last_name: str
+    first_name: str = Field(nullable=True)
+    last_name: str = Field(nullable=True)
     password_hash : str = Field(exclude=True)
     is_verified: bool = Field(default=False)
     created_at: datetime = Field(sa_column=Column(pg.TIMESTAMP,default=datetime.now))

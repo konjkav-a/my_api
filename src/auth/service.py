@@ -1,6 +1,7 @@
 from .models import User
 from .schemas import UserCreateModel
 from sqlmodel.ext.asyncio.session import AsyncSession
+from .utils import generate_passwd_hash
 from sqlalchemy import select
 
 
@@ -34,3 +35,11 @@ class UserService:
         new_user = User(email=user_data.email,username=user_data.username,password=user_data.password
         """
         new_user = User(**user_data_dict)
+
+        new_user.password_hash = generate_passwd_hash(user_data_dict['password'])
+
+        session.add(new_user)
+
+        await session.commit()
+        await session.refresh(new_user)
+        return new_user
