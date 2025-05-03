@@ -10,7 +10,7 @@ class UserService:
         # SELECT * FROM user WHERE email = 'a@mail.com';
         statement = select(User).where(User.email == email) # type: ignore
         result = await session.exec(statement)
-        user = result.first()
+        user = result.scalar()  # return orm object
 
         return user
 

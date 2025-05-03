@@ -20,3 +20,14 @@ class UserModel(BaseModel):
     password_hash: str = Field(exclude=True)
     created_at: datetime
     update_at: datetime
+
+    # password_hash: str = Field(..., exclude=True)
+    # created_at: datetime
+    # update_at: datetime
+    #
+    # class Config:
+    #     orm_mode = True
+
+class UserLoginModel(BaseModel):
+    email: str = Field(max_length=50)
+    password: str = Field(min_length=6)
