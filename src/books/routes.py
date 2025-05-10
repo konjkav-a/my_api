@@ -4,15 +4,19 @@ from sqlmodel.ext.asyncio.session import AsyncSession
 from .service import BookService
 from uuid import UUID
 from src.db.engine import get_session
+from src.auth.dependencies import AccessToken
 from typing import List
 
 book_router = APIRouter()
 book_service = BookService()
+access_token = AccessToken()
 
 
 @book_router.get("/", response_model=List[Book])
-async def get_all_books(session: AsyncSession = Depends(get_session)):
+async def get_all_books(session: AsyncSession = Depends(get_session),
+                        credential=Depends(access_token)):
     books = await book_service.get_all_books(session)
+    # print(credential)
     return books
 
 

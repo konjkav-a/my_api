@@ -39,6 +39,7 @@ def create_access_token(user_data: dict, expiry: timedelta = None, refresh: bool
 def decode_token(token: str) -> Any | None:
     try:
         token_data = jwt.decode(jwt= token,key=Config.JWT_SECRET,algorithms=[Config.JWT_ALGORITHM])
+        # print(token_data)
         return token_data
 
     except jwt. PyJWTError as e:
